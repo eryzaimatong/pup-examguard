@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Check-in · PUP ExamGuard</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main class="checkin">
+    <section class="hero">
+      <img class="hero__bg" src="assets/pup-banner.png" alt="">
+      <div class="logo logo--lg"><img src="assets/pup-logo.png" alt="PUP seal"></div>
+      <p class="eyebrow">POLYTECHNIC UNIVERSITY OF THE PHILIPPINES</p>
+      <p class="hero__title">PUP ExamGuard</p>
+      <p class="hero__sub">Secure exam mode for Google Forms</p>
+      <div class="hero__rule"></div>
+      <p class="hero__motto">“Mula Sa ʼYo, Para sa Bayan”</p>
+    </section>
+
+    <form class="checkin__form" id="checkin-form" novalidate>
+      <p class="eyebrow">STUDENT CHECK-IN</p>
+      <h1 class="title-serif">Welcome, Iskolar ng Bayan!</h1>
+      <p class="lead">Enter your details and the exam key from your professor. Your exam will open in locked mode.</p>
+
+      <label class="field">
+        <span class="field__label">Full name</span>
+        <input class="input" name="name" required autocomplete="name" placeholder="Juan Dela Cruz">
+      </label>
+
+      <div class="field-row">
+        <label class="field">
+          <span class="field__label">Student number</span>
+          <input class="input" name="studentNo" required placeholder="2024-00123-MN-0">
+        </label>
+        <label class="field">
+          <span class="field__label">Section</span>
+          <input class="input" name="section" required placeholder="BSIT 3-3">
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="field__label">Exam key</span>
+        <input class="input" name="examKey" required autocomplete="off" placeholder="PUP-3X7K-92">
+      </label>
+
+      <div class="notice exam-rules">
+        <p class="exam-rules__title">Before you start</p>
+        <ul>
+          <li id="rule-apps">Word, Notes, PDF readers, and other browsers will close automatically.</li>
+          <li id="rule-web">ChatGPT and all websites except the exam are blocked.</li>
+          <li>Each attempt is a strike. <span id="rule-strikes">3</span> strikes = exam auto-submits.</li>
+          <li>Your activity log is sent to your professor.</li>
+        </ul>
+      </div>
+
+      <label class="agree">
+        <input type="checkbox" name="agree" required>
+        I understand the rules and agree to be monitored.
+      </label>
+
+      <p class="form-error" id="checkin-error" role="alert" hidden></p>
+
+      <button class="btn btn--primary btn--block" type="submit" id="start-btn" disabled>Start Exam&nbsp;&nbsp;→</button>
+
+      <div class="checkin__footer">
+        <span id="exam-status"></span>
+        <button class="text-link" type="button" id="faculty-link">Faculty setup</button>
+      </div>
+    </form>
+  </main>
+
+  <div class="overlay" id="faculty-modal" role="dialog" aria-modal="true" aria-labelledby="faculty-title" hidden>
+    <form class="modal" id="faculty-form" novalidate>
+      <h2 class="modal__title" id="faculty-title">Faculty setup</h2>
+      <p class="lead">An exam is already set up on this computer. Enter its exit password to change it.</p>
+      <label class="field">
+        <span class="field__label">Exit password</span>
+        <input class="input" name="password" type="password" required autocomplete="current-password">
+      </label>
+      <p class="form-error" id="faculty-error" role="alert" hidden></p>
+      <div class="modal__actions">
+        <button class="btn btn--secondary" type="button" id="faculty-cancel">Cancel</button>
+        <button class="btn btn--primary" type="submit">Continue</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="js/store.js"></script>
+  <script src="js/checkin.js"></script>
+</body>
+</html>

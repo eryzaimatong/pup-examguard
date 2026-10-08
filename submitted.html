@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Exam Complete · PUP ExamGuard</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="logo"><img src="assets/pup-logo.png" alt="PUP seal"></div>
+    <div class="brand">
+      <span class="brand__name">PUP ExamGuard</span>
+      <span class="brand__sub">Exam Complete</span>
+    </div>
+  </header>
+  <div class="gold-rule"></div>
+
+  <main class="done">
+    <section class="card summary">
+      <div class="icon-circle icon-circle--success" aria-hidden="true">✓</div>
+      <h1 class="title-serif">Exam Submitted</h1>
+      <p class="lead" id="summary-lead">Your answers were sent to Google Forms. You may now exit locked mode.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <span class="stat__label">STUDENT</span>
+          <span class="stat__value" id="stat-student"></span>
+        </div>
+        <div class="stat">
+          <span class="stat__label">TIME USED</span>
+          <span class="stat__value" id="stat-time"></span>
+        </div>
+        <div class="stat">
+          <span class="stat__label">VIOLATIONS</span>
+          <span class="stat__value" id="stat-violations"></span>
+        </div>
+      </div>
+
+      <table class="log">
+        <thead>
+          <tr><th scope="col">Time</th><th scope="col">Attempted to open</th><th scope="col">Action</th></tr>
+        </thead>
+        <tbody id="log-body"></tbody>
+      </table>
+
+      <p class="summary__note" id="summary-note">This activity log was sent to your professor.</p>
+
+      <button class="btn btn--secondary btn--block" type="button" id="exit-btn">Exit ExamGuard</button>
+    </section>
+  </main>
+
+  <script src="js/store.js"></script>
+  <script src="js/submitted.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{
+  "name": "pup-examguard",
+  "productName": "PUP ExamGuard",
+  "version": "1.0.0",
+  "description": "Secure exam mode for Google Forms — Polytechnic University of the Philippines",
+  "private": true,
+  "main": "js/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "dist": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "ph.edu.pup.examguard",
+    "productName": "PUP ExamGuard",
+    "files": [
+      "index.html",
+      "teacher.html",
+      "exam.html",
+      "submitted.html",
+      "css/**",
+      "js/**",
+      "assets/**",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "portable",
+      "icon": "assets/icon.png"
+    },
+    "portable": {
+      "artifactName": "PUP-ExamGuard-${version}-portable.exe"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.education",
+      "icon": "assets/icon.png"
+    }
+  },
+  "devDependencies": {
+    "electron": "^44.7.0",
+    "electron-builder": "^26.15.3"
+  }
+}

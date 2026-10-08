@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Faculty Setup · PUP ExamGuard</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="logo"><img src="assets/pup-logo.png" alt="PUP seal"></div>
+    <div class="brand">
+      <span class="brand__name">PUP ExamGuard</span>
+      <span class="brand__sub">Faculty Setup</span>
+    </div>
+    <div class="spacer"></div>
+    <span class="role-pill">Faculty</span>
+  </header>
+  <div class="gold-rule"></div>
+
+  <main class="setup">
+    <form class="card setup__main" id="setup-form" novalidate>
+      <h1 class="title-serif">Create a Locked Exam</h1>
+      <p class="lead">Paste your Google Form link and set the rules. Students open this exam inside ExamGuard, where other apps and websites are blocked.</p>
+
+      <label class="field">
+        <span class="field__label">Exam title</span>
+        <input class="input" name="title" required placeholder="Midterm Examination – COMP 012">
+      </label>
+
+      <label class="field">
+        <span class="field__label">Google Form link</span>
+        <input class="input" name="formUrl" type="url" required placeholder="https://docs.google.com/forms/d/e/1FAIpQL…/viewform">
+        <span class="field__error" id="form-url-error" hidden>Enter a Google Forms link (docs.google.com/forms/… or forms.gle/…).</span>
+      </label>
+
+      <div class="field-row">
+        <label class="field">
+          <span class="field__label">Duration</span>
+          <input class="input" name="duration" type="number" min="1" max="600" required placeholder="60 minutes">
+        </label>
+        <label class="field">
+          <span class="field__label">Exit password (for proctor)</span>
+          <input class="input" name="exitPassword" type="password" required placeholder="••••••••" autocomplete="new-password">
+          <span class="field__hint" id="password-hint" hidden>Leave blank to keep the current password.</span>
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="field__label">Google Sheet log link (optional)</span>
+        <input class="input" name="logUrl" type="url" placeholder="https://script.google.com/macros/s/…/exec">
+        <span class="field__hint">Apps Script web app URL that writes the activity log to your Google Sheet. See the README for setup.</span>
+        <span class="field__error" id="log-url-error" hidden>Enter the Apps Script web app URL (https://script.google.com/macros/s/…/exec).</span>
+      </label>
+
+      <div class="setup__actions">
+        <button class="btn btn--primary" type="submit">Generate Exam Key</button>
+        <button class="btn btn--secondary" type="button" id="preview-btn">Preview as Student</button>
+      </div>
+
+      <p class="form-error" id="setup-error" role="alert" hidden></p>
+
+      <div class="notice exam-key" id="exam-key" hidden>
+        <div class="exam-key__text">
+          <span class="exam-key__label">EXAM KEY</span>
+          <span class="exam-key__value" id="exam-key-value"></span>
+        </div>
+        <span class="exam-key__hint">Share this key with your students</span>
+      </div>
+
+      <div class="setup__actions">
+        <button class="btn btn--secondary" type="button" id="export-btn" disabled>Export Exam File</button>
+        <button class="btn btn--secondary" type="button" id="import-btn">Import Exam File</button>
+      </div>
+      <p class="field__hint" id="file-status" role="status">Export saves “&lt;exam title&gt;.examguard.json”. Import it on each lab PC to set up the same exam.</p>
+    </form>
+
+    <aside class="card rules" aria-labelledby="rules-title">
+      <h2 class="rules__title" id="rules-title">Blocked During Exam</h2>
+      <p class="rules__lead">These close automatically and count as a strike.</p>
+
+      <div class="rule">
+        <div class="rule__text">
+          <span class="rule__name">Other web pages</span>
+          <span class="rule__desc">Only the Google Form can load; other browsers close</span>
+        </div>
+        <label class="toggle"><input type="checkbox" data-rule="web" checked aria-label="Block other web pages"><span></span></label>
+      </div>
+      <div class="rule">
+        <div class="rule__text">
+          <span class="rule__name">ChatGPT &amp; AI tools</span>
+          <span class="rule__desc">ChatGPT, Gemini, Copilot, Claude — apps and sites</span>
+        </div>
+        <label class="toggle"><input type="checkbox" data-rule="ai" checked aria-label="Block ChatGPT and AI tools"><span></span></label>
+      </div>
+      <div class="rule">
+        <div class="rule__text">
+          <span class="rule__name">Microsoft Word</span>
+          <span class="rule__desc">winword.exe, WPS Writer, Pages</span>
+        </div>
+        <label class="toggle"><input type="checkbox" data-rule="word" checked aria-label="Block Microsoft Word"><span></span></label>
+      </div>
+      <div class="rule">
+        <div class="rule__text">
+          <span class="rule__name">Notes apps</span>
+          <span class="rule__desc">Notepad, Sticky Notes, OneNote</span>
+        </div>
+        <label class="toggle"><input type="checkbox" data-rule="notes" checked aria-label="Block notes apps"><span></span></label>
+      </div>
+      <div class="rule">
+        <div class="rule__text">
+          <span class="rule__name">PDF readers</span>
+          <span class="rule__desc">Acrobat, Foxit, SumatraPDF, PDF-XChange</span>
+        </div>
+        <label class="toggle"><input type="checkbox" data-rule="pdf" checked aria-label="Block PDF readers"><span></span></label>
+      </div>
+      <div class="rule">
+        <div class="rule__text">
+          <span class="rule__name">Leaving the exam window</span>
+          <span class="rule__desc">Leaving the exam window counts as a strike</span>
+        </div>
+        <label class="toggle"><input type="checkbox" data-rule="blur" checked aria-label="Leaving the exam window counts as a strike"><span></span></label>
+      </div>
+
+      <div class="rule rule--plain">
+        <div class="rule__text">
+          <span class="rule__name">Strikes before auto-submit</span>
+          <span class="rule__desc">Auto-submits at the limit</span>
+        </div>
+        <div class="stepper">
+          <button type="button" id="strikes-down" aria-label="Fewer strikes">–</button>
+          <output id="strikes-value" aria-live="polite">3</output>
+          <button type="button" id="strikes-up" aria-label="More strikes">+</button>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="js/store.js"></script>
+  <script src="js/teacher.js"></script>
+</body>
+</html>

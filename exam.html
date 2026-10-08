@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Exam · PUP ExamGuard</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="exam">
+  <header class="exam-bar">
+    <div class="logo logo--sm"><img src="assets/pup-logo.png" alt="PUP seal"></div>
+    <div class="exam-bar__title">
+      <span class="exam-bar__name" id="exam-title"></span>
+      <span class="exam-bar__student" id="exam-student"></span>
+    </div>
+    <div class="spacer"></div>
+    <span class="locked-badge"><span class="dot dot--gold"></span>LOCKED MODE</span>
+    <div class="strikes" id="strikes" aria-label="Strikes">Strikes</div>
+    <div class="timer" id="timer">
+      <span class="timer__label">Time left</span>
+      <span class="timer__value" id="timer-value" role="timer"></span>
+    </div>
+  </header>
+  <div class="gold-rule gold-rule--thin"></div>
+
+  <main class="form-area form-area--native">
+    <!-- The Google Form is drawn here by the main process (WebContentsView). -->
+    <div class="form-frame" id="form-slot">Loading the exam form…</div>
+  </main>
+
+  <footer class="monitor">
+    <span class="dot dot--green"></span>
+    <span id="monitor-text"></span>
+  </footer>
+
+  <div class="overlay" id="violation" role="alertdialog" aria-modal="true" aria-labelledby="violation-title" aria-describedby="violation-body" hidden>
+    <div class="modal">
+      <div class="icon-circle icon-circle--danger" aria-hidden="true">!</div>
+      <h2 class="modal__title" id="violation-title"></h2>
+      <p class="lead" id="violation-body"></p>
+      <div class="strike-meter">
+        <p class="strike-meter__label" id="meter-label"></p>
+        <div class="strike-meter__bars" id="meter-bars"></div>
+        <p class="strike-meter__note" id="meter-note"></p>
+      </div>
+      <button class="btn btn--primary btn--block" type="button" id="return-btn">Return to Exam</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="proctor" role="dialog" aria-modal="true" aria-labelledby="proctor-title" hidden>
+    <form class="modal" id="proctor-form" novalidate>
+      <h2 class="modal__title" id="proctor-title">End exam early?</h2>
+      <p class="lead">For proctors only. Enter the exit password to end this exam and unlock the computer. ExamGuard will not submit the form.</p>
+      <label class="field">
+        <span class="field__label">Exit password</span>
+        <input class="input" name="password" type="password" required autocomplete="off">
+      </label>
+      <p class="form-error" id="proctor-error" role="alert" hidden></p>
+      <div class="modal__actions">
+        <button class="btn btn--secondary" type="button" id="proctor-cancel">Cancel</button>
+        <button class="btn btn--primary" type="submit">End Exam</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="js/store.js"></script>
+  <script src="js/exam.js"></script>
+</body>
+</html>

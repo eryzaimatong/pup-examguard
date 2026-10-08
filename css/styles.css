@@ -1,0 +1,1203 @@
+/* PUP ExamGuard — shared styles (tokens from Figma file C2ut0A9ZDsdjPCR4m7IAMY) */
+
+/* Bundled fonts (SIL OFL, see assets/fonts) so the app works offline. */
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap; src: url("../assets/fonts/inter-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap; src: url("../assets/fonts/inter-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap; src: url("../assets/fonts/inter-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 700; font-display: swap; src: url("../assets/fonts/inter-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Playfair Display"; font-style: normal; font-weight: 700; font-display: swap; src: url("../assets/fonts/playfair-display-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Playfair Display"; font-style: italic; font-weight: 400; font-display: swap; src: url("../assets/fonts/playfair-display-latin-400-italic.woff2") format("woff2"); }
+
+:root {
+  --maroon: #7b1113;
+  --maroon-dark: #5a0a0c;
+  --gold: #f2b705;
+  --gold-soft: #fff6d9;
+  --cream: #f7f4ef;
+  --exam-bg: #f3eee8;
+  --border: #e5ded6;
+  --text: #1f1a1a;
+  --muted: #6b6262;
+  --radio: #9a9090;
+  --red: #c62828;
+  --red-soft: #fdecec;
+  --red-track: #ebc9c9;
+  --green: #2e7d32;
+  --green-soft: #e8f5e9;
+  --on-maroon-muted: #e8cfcf;
+  --hero-sub: #f3e3c3;
+
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text);
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+p,
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: inherit;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- PUP logo (circular crop of assets/pup-logo.png) ---------- */
+
+.logo {
+  position: relative;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  overflow: hidden;
+}
+
+.logo img {
+  position: absolute;
+  left: -56.73%;
+  top: -2.885%;
+  width: 214.9%;
+  height: 110.1%;
+  max-width: none;
+  object-fit: cover;
+}
+
+.logo--sm {
+  width: 36px;
+  height: 36px;
+}
+
+.logo--lg {
+  width: 150px;
+  height: 150px;
+}
+
+/* ---------- App header ---------- */
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 72px;
+  padding: 0 32px;
+  background: var(--maroon);
+  flex-shrink: 0;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  white-space: nowrap;
+}
+
+.brand__name {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+}
+
+.brand__sub {
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--gold);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.role-pill {
+  padding: 6px 12px;
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.gold-rule {
+  height: 4px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.gold-rule--thin {
+  height: 3px;
+}
+
+/* ---------- Cards, text ---------- */
+
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.title-serif {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--maroon);
+}
+
+.lead {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.eyebrow {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+}
+
+/* ---------- Form fields ---------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field__label {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.input {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: 400 14px var(--font-sans);
+  color: var(--text);
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--radio);
+}
+
+.input:focus {
+  border-color: var(--maroon);
+  box-shadow: 0 0 0 3px rgba(123, 17, 19, 0.12);
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--red);
+}
+
+.field-row {
+  display: flex;
+  gap: 16px;
+}
+
+.field-row > .field {
+  flex: 1;
+}
+
+.field__error {
+  font-size: 12px;
+  color: var(--red);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 0.15s, opacity 0.15s;
+}
+
+.btn--primary {
+  background: var(--maroon);
+  border: 0;
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: var(--maroon-dark);
+}
+
+.btn--secondary {
+  background: #fff;
+  border: 1.5px solid var(--maroon);
+  color: var(--maroon);
+}
+
+.btn--secondary:hover {
+  background: var(--cream);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn:focus-visible,
+.toggle input:focus-visible + span,
+.stepper button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ---------- Gold notice box ---------- */
+
+.notice {
+  background: var(--gold-soft);
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  padding: 14px 18px;
+}
+
+/* =========================================================
+   01 · Teacher Setup
+   ========================================================= */
+
+.setup {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+  padding: 40px;
+}
+
+.setup__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 32px;
+}
+
+.setup__main .title-serif {
+  font-size: 26px;
+}
+
+.setup__actions {
+  display: flex;
+  gap: 12px;
+}
+
+.exam-key {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.exam-key__text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-weight: 700;
+}
+
+.exam-key__label {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.exam-key__value {
+  font-size: 22px;
+  color: var(--maroon);
+}
+
+.exam-key__hint {
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.rules {
+  flex-shrink: 0;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px;
+}
+
+.rules__title {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.rules__lead {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.rule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--cream);
+  border-radius: 10px;
+}
+
+.rule--plain {
+  background: none;
+}
+
+.rule__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rule__name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.rule__desc {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Toggle switch: 40×22, maroon track, 16px white knob */
+.toggle {
+  position: relative;
+  flex-shrink: 0;
+  width: 40px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle span {
+  position: absolute;
+  inset: 0;
+  border-radius: 11px;
+  background: var(--radio);
+  transition: background-color 0.15s;
+}
+
+.toggle span::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.15s;
+}
+
+.toggle input:checked + span {
+  background: var(--maroon);
+}
+
+.toggle input:checked + span::after {
+  transform: translateX(18px);
+}
+
+/* Stepper */
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.stepper button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 19px;
+}
+
+.stepper button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.stepper output {
+  min-width: 11px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--maroon);
+}
+
+/* =========================================================
+   02 · Student Check-in
+   ========================================================= */
+
+.checkin {
+  flex: 1;
+  display: flex;
+  background: #fff;
+}
+
+.hero {
+  position: relative;
+  flex-shrink: 0;
+  width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 56px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(90, 10, 12, 0.95);
+}
+
+.hero > :not(.hero__bg) {
+  position: relative;
+  z-index: 2;
+}
+
+.hero__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 44px;
+  color: #fff;
+}
+
+.hero__sub {
+  font-size: 16px;
+  color: var(--hero-sub);
+}
+
+.hero__rule {
+  width: 64px;
+  height: 3px;
+  background: var(--gold);
+}
+
+.hero__motto {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 18px;
+  color: #fff;
+}
+
+.checkin__form {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px 96px;
+}
+
+.checkin__form .title-serif {
+  font-size: 32px;
+}
+
+.exam-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.exam-rules__title {
+  font-weight: 700;
+  color: var(--maroon);
+}
+
+.exam-rules ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.exam-rules li::before {
+  content: "•  ";
+  white-space: pre;
+}
+
+.agree {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.agree input {
+  appearance: none;
+  flex-shrink: 0;
+  display: grid;
+  place-content: center;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  border: 1.5px solid var(--radio);
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.agree input:checked {
+  background: var(--maroon);
+  border-color: var(--maroon);
+}
+
+.agree input:checked::after {
+  content: "✓";
+  font-weight: 700;
+  font-size: 12px;
+  color: #fff;
+}
+
+.agree input:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.form-error {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--red);
+}
+
+/* =========================================================
+   03 · Exam Window  /  04 · Violation Warning
+   ========================================================= */
+
+body.exam {
+  background: var(--exam-bg);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.exam-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 64px;
+  padding: 0 28px;
+  background: var(--maroon);
+  flex-shrink: 0;
+}
+
+.exam-bar__title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.exam-bar__name {
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.exam-bar__student {
+  font-size: 12px;
+  color: var(--on-maroon-muted);
+}
+
+.locked-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: var(--maroon-dark);
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot--gold {
+  background: var(--gold);
+}
+
+.dot--green {
+  background: var(--green);
+}
+
+.strikes {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--on-maroon-muted);
+}
+
+.strike {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold);
+}
+
+.strike--hit {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.timer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: #fff;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.timer__label {
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.timer__value {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--maroon);
+  font-variant-numeric: tabular-nums;
+}
+
+.timer--low .timer__value {
+  color: var(--red);
+}
+
+.form-area {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 28px 16px;
+}
+
+.form-frame {
+  flex: 1;
+  width: 760px;
+  max-width: 100%;
+  min-height: 600px;
+  border: 0;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.gform {
+  width: 760px;
+  max-width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.gform--header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 32px 28px 24px;
+  overflow: hidden;
+}
+
+.gform--header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: var(--maroon);
+}
+
+.gform__title {
+  font-size: 28px;
+}
+
+.gform--question {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px 28px;
+  border: 1px solid var(--border);
+}
+
+.gform__q {
+  padding: 0;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.option input {
+  appearance: none;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  border: 2px solid var(--radio);
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+.option input:checked {
+  border-color: var(--maroon);
+}
+
+.option input:checked::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--maroon);
+}
+
+.option input:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.monitor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 28px;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--muted);
+  white-space: pre;
+  flex-shrink: 0;
+}
+
+/* Violation modal */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(18, 6, 7, 0.62);
+}
+
+.modal {
+  width: 480px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 36px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.icon-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.icon-circle--danger {
+  background: var(--red-soft);
+  color: var(--red);
+  font-size: 32px;
+}
+
+.icon-circle--success {
+  background: var(--green-soft);
+  color: var(--green);
+  font-size: 30px;
+}
+
+.modal__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.strike-meter {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  background: var(--red-soft);
+  border-radius: 10px;
+}
+
+.strike-meter__label {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--red);
+}
+
+.strike-meter__bars {
+  width: 100%;
+  display: flex;
+  gap: 6px;
+}
+
+.strike-meter__bars span {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--red-track);
+}
+
+.strike-meter__bars span.is-hit {
+  background: var(--red);
+}
+
+.strike-meter__note {
+  font-weight: 500;
+  font-size: 12px;
+}
+
+/* =========================================================
+   05 · Exam Submitted
+   ========================================================= */
+
+.done {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 36px;
+}
+
+.summary {
+  width: 640px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 36px;
+  border-radius: 18px;
+  text-align: center;
+}
+
+.summary .title-serif {
+  font-size: 28px;
+}
+
+.stats {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+  text-align: left;
+}
+
+.stat {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  background: var(--cream);
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.stat__label {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.stat__value {
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stat__value--danger {
+  color: var(--red);
+}
+
+.log {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  font-size: 13px;
+  text-align: left;
+  table-layout: fixed;
+}
+
+.log th,
+.log td {
+  padding: 10px 14px;
+  font-weight: 400;
+}
+
+.log th {
+  background: var(--gold-soft);
+  font-weight: 700;
+  color: var(--maroon);
+}
+
+.log td.log__action {
+  font-weight: 600;
+  color: var(--red);
+}
+
+.log__empty {
+  color: var(--muted);
+  text-align: center;
+}
+
+.summary__note {
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.log td.log__action--info {
+  color: var(--muted);
+}
+
+/* =========================================================
+   Desktop app additions
+   ========================================================= */
+
+.text-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  color: var(--maroon);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.text-link:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.field__hint {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.checkin__footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.modal .field {
+  width: 100%;
+  text-align: left;
+}
+
+.modal__actions {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+}
+
+.modal__actions > .btn {
+  flex: 1;
+}
+
+/* The Google Form is a native WebContentsView laid over #form-slot. */
+.form-area--native {
+  overflow: hidden;
+}
+
+.form-area--native .form-frame {
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ---------- Narrow screens ---------- */
+
+@media (max-width: 1100px) {
+  .setup {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .rules {
+    width: auto;
+  }
+  .hero {
+    width: 42%;
+  }
+  .checkin__form {
+    padding: 40px 48px;
+  }
+}
+
+@media (max-width: 760px) {
+  .setup,
+  .done {
+    padding: 16px;
+  }
+  .setup__main,
+  .rules,
+  .summary {
+    padding: 20px;
+  }
+  .field-row,
+  .setup__actions,
+  .stats {
+    flex-direction: column;
+  }
+  .checkin {
+    flex-direction: column;
+  }
+  .hero {
+    width: auto;
+    padding: 40px 16px;
+  }
+  .hero__title {
+    font-size: 34px;
+  }
+  .checkin__form {
+    padding: 32px 16px;
+  }
+  .app-header,
+  .exam-bar {
+    padding: 0 16px;
+  }
+  .role-pill,
+  .exam-bar__student,
+  .locked-badge {
+    display: none;
+  }
+}
