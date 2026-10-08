@@ -179,22 +179,45 @@ function createFormView({ win, exam, onKey, onBlocked, onSubmitted }) {
     return false;
   }
 
+  // Where the view is, for the activity log when auto-submit fails.
+  function pageDetail() {
+    const u = parse(wc.getURL());
+    return u ? `${u.hostname}${u.pathname}` : "no page";
+  }
+
+  // Looks for the Submit button for up to `ms` (the page may still be
+  // loading). Returns { point } or { error }.
+  async function findSubmit(ms) {
+    const until = Date.now() + ms;
+    let error = null;
+    for (;;) {
+      try {
+        const point = await wc.executeJavaScript(FIND_SUBMIT_JS, true);
+        if (point) return { point };
+        error = null;
+      } catch (err) {
+        error = err && err.message ? err.message : String(err);
+      }
+      if (Date.now() >= until) return { error };
+      await sleep(500);
+    }
+  }
+
   // Clicks Submit / Isumite with a real mouse click, then falls back to a DOM
-  // click. Resolves to { clicked, ok } where ok means Google confirmed it.
+  // click. Resolves to { clicked, ok, detail } where ok means Google
+  // confirmed it and detail explains a failure.
   async function autoSubmit() {
     autoSubmitting = true;
     try {
       if (await isSubmittedPage()) return { clicked: false, ok: true };
-      let point = null;
-      try {
-        point = await wc.executeJavaScript(FIND_SUBMIT_JS, true);
-      } catch {
-        point = null;
+      const found = await findSubmit(5000);
+      if (!found.point) {
+        const why = found.error ? `script error: ${found.error}` : "no Submit button";
+        return { clicked: false, ok: false, detail: `Submit button not found (${why}) on ${pageDetail()}` };
       }
-      if (!point) return { clicked: false, ok: false };
 
       await sleep(300); // let scrollIntoView settle
-      const click = { x: point.x, y: point.y, button: "left", clickCount: 1 };
+      const click = { x: found.point.x, y: found.point.y, button: "left", clickCount: 1 };
       wc.sendInputEvent({ type: "mouseDown", ...click });
       wc.sendInputEvent({ type: "mouseUp", ...click });
       if (await waitForSubmitted(4000)) return { clicked: true, ok: true };
@@ -204,7 +227,12 @@ function createFormView({ win, exam, onKey, onBlocked, onSubmitted }) {
       } catch {
         // page navigated away mid-call
       }
-      return { clicked: true, ok: await waitForSubmitted(6000) };
+      if (await waitForSubmitted(6000)) return { clicked: true, ok: true };
+      return {
+        clicked: true,
+        ok: false,
+        detail: `Clicked Submit but Google didn't confirm (unanswered required question or not on the last page) on ${pageDetail()}`,
+      };
     } finally {
       autoSubmitting = false;
     }

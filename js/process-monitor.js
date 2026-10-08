@@ -162,11 +162,14 @@ async function sweep(rules) {
 
 // Sweeps every second. onClosed(closed, fresh) receives every app closed in a
 // sweep, plus the ones not already closed within the cooldown (a relaunching
-// or slow-to-die app shouldn't earn a strike every second).
-function createMonitor({ rules, intervalMs = 1000, cooldownMs = 3000, onClosed }) {
+// or slow-to-die app shouldn't earn a strike every second). Apps named in
+// `grace` (closed just before the exam) earn no strike until graceMs passes:
+// big apps like Chrome can take a few seconds to fully exit.
+function createMonitor({ rules, intervalMs = 1000, cooldownMs = 3000, grace = [], graceMs = 10000, onClosed }) {
   let timer = null;
   let busy = false;
   const lastClosedAt = new Map();
+  const quietUntil = new Map(grace.map((name) => [name, Date.now() + graceMs]));
 
   async function tick() {
     if (busy) return;
@@ -174,7 +177,9 @@ function createMonitor({ rules, intervalMs = 1000, cooldownMs = 3000, onClosed }
     try {
       const closed = await sweep(rules);
       const now = Date.now();
-      const fresh = closed.filter((app) => now - (lastClosedAt.get(app.name) || 0) > cooldownMs);
+      const fresh = closed.filter(
+        (app) => now - (lastClosedAt.get(app.name) || 0) > cooldownMs && now > (quietUntil.get(app.name) || 0)
+      );
       for (const app of closed) lastClosedAt.set(app.name, now);
       if (closed.length && timer) onClosed(closed, fresh);
     } finally {

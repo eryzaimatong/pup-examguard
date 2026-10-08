@@ -134,7 +134,11 @@ function addStrike({ appName, action, event, title, body }) {
 
 // One strike per sweep, for apps outside their cooldown.
 function onAppsClosed(closed, fresh) {
-  if (!examActive() || finishing || fresh.length === 0) return;
+  if (!examActive() || finishing) return;
+  // Any app we close (even without a strike) can steal focus for a moment;
+  // don't also count that as leaving the window.
+  lastViolationAt = Date.now();
+  if (fresh.length === 0) return;
   const names = fresh.map((a) => a.label).join(", ");
   const shorts = [...new Set(fresh.map((a) => a.short))].join(", ");
   addStrike({
@@ -190,9 +194,13 @@ function onBlocked(kind, url) {
 
 // ---------- Exam lifecycle ----------
 
-function beginLockedExam() {
+function beginLockedExam(closedBeforeStart = []) {
   lock();
-  monitor = createMonitor({ rules: session.exam.rules, onClosed: onAppsClosed });
+  monitor = createMonitor({
+    rules: session.exam.rules,
+    grace: closedBeforeStart.map((a) => a.name),
+    onClosed: onAppsClosed,
+  });
   monitor.start();
   examTimer = setInterval(() => {
     if (Date.now() >= session.endsAt) finishExam("time");
@@ -251,7 +259,8 @@ async function startExam(input) {
   }
   storage.saveSession(session);
   log("exam_started", `${exam.durationMinutes} min · ${exam.maxStrikes} strikes`);
-  beginLockedExam();
+  lastViolationAt = Date.now();
+  beginLockedExam(closed);
   return { ok: true };
 }
 
@@ -266,13 +275,13 @@ async function finishExam(reason) {
     if (reason === "time" || reason === "strikes") {
       send("submitting", reason);
       log("auto_submit_attempt", reason === "time" ? "Time is up" : "Strike limit reached");
-      let result = { clicked: false, ok: false };
+      let result = { clicked: false, ok: false, detail: "The form wasn't loaded" };
       if (formView) {
         formView.setVisible(true);
         result = await formView.autoSubmit();
       }
       session.autoSubmit = result;
-      log(result.ok ? "auto_submit_ok" : "auto_submit_failed", result.clicked ? "" : "Submit button not found");
+      log(result.ok ? "auto_submit_ok" : "auto_submit_failed", result.detail || "");
     }
 
     session.submittedAt = Date.now();
