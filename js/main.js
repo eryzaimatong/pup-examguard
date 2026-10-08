@@ -152,6 +152,14 @@ function onAppsClosed(closed, fresh) {
 
 function onWindowBlur() {
   if (!locked || finishing || !examActive()) return;
+  // Electron also fires "blur" when the form view swaps renderer processes
+  // (e.g. moving to Google sign-in) while the window keeps OS focus. Only a
+  // real loss of focus counts.
+  setTimeout(onRealBlur, 50);
+}
+
+function onRealBlur() {
+  if (!locked || finishing || !examActive() || win.isFocused()) return;
   const blurAt = Date.now();
   refocus();
   if (!session.exam.rules.blur || blurTimer) return;

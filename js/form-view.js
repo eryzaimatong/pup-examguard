@@ -2,6 +2,7 @@
 // exam screen's form slot (Google refuses to load forms inside iframes).
 // Uses an in-memory session so no Google login survives on shared PCs.
 
+const path = require("path");
 const { WebContentsView, session: electronSession } = require("electron");
 
 const PARTITION = "examguard-form"; // no "persist:" prefix → memory only
@@ -110,6 +111,7 @@ function createFormView({ win, exam, onKey, onBlocked, onSubmitted }) {
   const view = new WebContentsView({
     webPreferences: {
       session: ses,
+      preload: path.join(__dirname, "form-preload.js"),
       sandbox: true,
       contextIsolation: true,
       nodeIntegration: false,
